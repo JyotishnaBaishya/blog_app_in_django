@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+	nav {
+		color: white;
+		padding-top: 25px;
+	}
+</style>
+
+{%if user.is_authenticated%}
+	<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+		<h1> {{user.username}}</h1>
+		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+			<li class="nav-item active">
+				<a class="nav-link" href="/article" color="light-blue"><h3>New Article</h3></a>
+			</li>
+			<li class="nav-item active">
+				<a class="nav-link" href="/logout" color="light-blue">
+					<h3>Logout</h3>
+				</a>
+			</li>
+		</ul>
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+				<form method='GET' action='/search'>
+					{{ search_form }}
+					<button class="btn btn-info" type="submit">Search</button>
+				</form>
+			</li>
+		</ul>
+	</nav>
+
+	<div class="container py-5">
+		{%for article in articles%}
+		<h3><strong> {{article.articlename}} </strong></h3>
+		<p><img src="{{article.photo.url}}" width="500" height="300" /></p>
+		<p>{{article.description}} </p>
+		<p>
+			{%if article.visibility%}
+			<strong>Public</strong>
+			{%else%}
+			<strong>Private</strong>
+			{%endif%}
+		</p>
+		{%endfor%}
+	</div>
+
+{%endif%}
